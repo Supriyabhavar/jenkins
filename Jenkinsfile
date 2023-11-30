@@ -4,7 +4,7 @@ pipeline {
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
         S3_BUCKET_NAME = 'test-websitehosting-2'
-        CLOUDFRONT_DISTRIBUTION_ID = 'https://d3b8by6cb086w8.cloudfront.net'
+        CLOUDFRONT_DISTRIBUTION_ID = 'E1FENB7LMT5MFJ'
     }
 
     stages {
