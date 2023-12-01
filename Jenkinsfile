@@ -30,7 +30,7 @@ pipeline {
                     withAWS(credentials: "aws-creds", region: "us-east-1") {
                         sh 'ls'
                         sh '''
-                            cd dist/angular-condui &&
+                            cd dist/angular-conduit 
                             aws s3 cp . s3://${S3_BUCKET_NAME}/ --recursive
                               '''
                     }
