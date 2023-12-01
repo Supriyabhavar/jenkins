@@ -14,7 +14,7 @@ pipeline {
         CLOUDFRONT_DISTRIBUTION_ID = 'E1FENB7LMT5MFJ'
     }
      stages {
-        stage(‘Prepare’) {
+        stage("Prepare") {
             steps {
                 script {
                     sh 'npm install --force'
@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
+        stage("Build") {
             steps {
                 script {
                     sh 'npm run build'
@@ -31,7 +31,7 @@ pipeline {
             }
         }
 
-        stage(‘Deploy’) {
+        stage("Deploy") {
             steps {
                 script {
                     sh 'aws s3 cp dist s3://test-websitehosting-2/ --recursive'
