@@ -34,11 +34,15 @@ pipeline {
                     withAWS(credentials: "aws-creds", region: "us-east-1") {
                         dir('dist/angular-condui') {
                             sh 'ls'
-                          //  sh 'cd dist/angular-condui && aws s3 cp * s3://test-websitehosting-2/ --recursive'                            }
+                            sh '''
+                               cd dist/angular-condui &&
+                               aws s3 cp * s3://test-websitehosting-2/ --recursive
+                              '''                     
+                       }
                     }
                 }
             }
         }
     }
-    }
 }
+      
