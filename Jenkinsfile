@@ -19,7 +19,7 @@ pipeline {
                 }
             }
         }
-    }
+
         stage("Build") {
             steps {
                 script {
@@ -36,21 +36,31 @@ pipeline {
                             sh 'ls'
                             sh '''
                                cd dist/angular-condui &&
-                               aws s3 cp * s3://test-websitehosting-2/ --recursive
-                              '''                     
+                               aws s3 cp * s3://${S3_BUCKET_NAME}/ --recursive
+                              '''
                        }
-                    }  
+                    }
                 }
             }
         }
-        stage("cloudfront-invalidation"){
-            steps{
+
+        stage("cloudfront-invalidation") {
+            steps {
                 script {
                     withAWS(credentials: "aws-creds", region: "us-east-1") {
                         sh "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths '/*'" 
-                    }    
+                    }
+                }
             }
         }
     }
+
+    post {
+        success {
+            echo "Pipeline succeeded!"
+        }
+        failure {
+            echo "Pipeline failed!"
+        }
+    }
 }
-      
