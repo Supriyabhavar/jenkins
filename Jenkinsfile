@@ -26,7 +26,6 @@ pipeline {
             steps {
                 script {
                     sh 'npm run build'
-                    sh 'mv build dist'
                 }
             }
         }
@@ -35,7 +34,7 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: "aws-creds", region: "us-east-1") {
-                        sh 'aws s3 cp dist s3://test-websitehosting-2/ --recursive'
+                        sh 'cd dist/angular-condui && aws s3 cp * s3://test-websitehosting-2/ --recursive'
                     }
                 }
             }
