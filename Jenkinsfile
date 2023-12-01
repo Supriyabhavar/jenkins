@@ -19,7 +19,7 @@ pipeline {
                 }
             }
         }
-
+    }
         stage("Build") {
             steps {
                 script {
@@ -39,8 +39,15 @@ pipeline {
                                aws s3 cp * s3://test-websitehosting-2/ --recursive
                               '''                     
                        }
-                    }
+                    }  
                 }
+            }
+        }
+        stage(){
+            steps{
+                script {
+                    withAWS(credentials: "aws-creds", region: "us-east-1") {
+                        sh "aws cloudfront create-invalidation --distribution-id ${CLOUDFRONT_DISTRIBUTION_ID} --paths '/*'" 
             }
         }
     }
