@@ -34,7 +34,9 @@ pipeline {
         stage("Deploy") {
             steps {
                 script {
-                    sh 'aws s3 cp dist s3://test-websitehosting-2/ --recursive'
+                    withAWS(credentials: "aws-creds", region: "us-east-1") {
+                        sh 'aws s3 cp dist s3://test-websitehosting-2/ --recursive'
+                    }
                 }
             }
         }
