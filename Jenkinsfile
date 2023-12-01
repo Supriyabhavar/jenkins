@@ -1,19 +1,17 @@
 pipeline {
     agent any
 
-
-   
     parameters {
         string(name: 'S3_BUCKET_NAME', defaultValue: 'test-websitehosting-2', description: 'Enter the S3 bucket name')
     }
-
 
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
         S3_BUCKET_NAME = 'test-websitehosting-2'
         CLOUDFRONT_DISTRIBUTION_ID = 'E1FENB7LMT5MFJ'
     }
-     stages {
+
+    stages {
         stage("Prepare") {
             steps {
                 script {
@@ -34,11 +32,13 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: "aws-creds", region: "us-east-1") {
-                        sh 'cd dist/angular-condui && aws s3 cp * s3://test-websitehosting-2/ --recursive'
+                        dir('dist/angular-condui') {
+                            sh 'ls'
+                            sh 'aws s3 cp * s3://test-websitehosting-2/ --recursive'
+                        }
                     }
                 }
             }
         }
     }
 }
-
