@@ -14,17 +14,13 @@ pipeline {
     stages {
         stage("Prepare") {
             steps {
-                script {
-                    sh 'npm install --force'
-                }
+                sh 'npm install --force'
             }
         }
 
         stage("Build") {
             steps {
-                script {
-                    sh 'npm run build'
-                }
+                sh 'npm run build'
             }
         }
 
@@ -32,13 +28,11 @@ pipeline {
             steps {
                 script {
                     withAWS(credentials: "aws-creds", region: "us-east-1") {
-                        dir('dist/angular-condui') {
-                            sh 'ls'
-                            // sh '''
-                            //    cd dist/angular-condui &&
-                            //    aws s3 cp * s3://${S3_BUCKET_NAME}/ --recursive
-                            //   '''
-                       }
+                        sh 'ls'
+                        sh '''
+                            cd dist/angular-condui &&
+                            aws s3 cp * s3://${S3_BUCKET_NAME}/ --recursive
+                              '''
                     }
                 }
             }
@@ -55,12 +49,5 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            echo "Pipeline succeeded!"
-        }
-        failure {
-            echo "Pipeline failed!"
-        }
-    }
+   x
 }
