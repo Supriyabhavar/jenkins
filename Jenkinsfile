@@ -14,7 +14,10 @@ pipeline {
     stages {
         stage("Prepare") {
             steps {
-                sh 'echo $BRANCH_NAME'
+                script {
+                    echo "Branch Name: ${env.BRANCH_NAME}"
+                }
+                // sh 'echo $BRANCH_NAME'
                 // sh 'npm install --force'
             }
         }
