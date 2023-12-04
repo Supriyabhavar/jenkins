@@ -14,6 +14,7 @@ pipeline {
     stages {
         stage("Prepare") {
             steps {
+                sh 'echo $BRANCH_NAME'
                 sh 'npm install --force'
             }
         }
@@ -32,7 +33,7 @@ pipeline {
                         sh '''
                             cd dist/angular-conduit 
                             aws s3 cp . s3://${S3_BUCKET_NAME}/ --recursive
-                              '''
+                        '''
                     }
                 }
             }
