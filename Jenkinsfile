@@ -15,6 +15,13 @@ pipeline {
         stage("Prepare") {
             steps {
                 script {
+                    // Run Git command to get the current branch
+                    def branchName = sh(script: 'git rev-parse --abbrev-ref HEAD', returnStdout: true).trim()
+                    
+                    // Set the branch name as an environment variable
+                    env.BRANCH_NAME = branchName
+                    
+                    // Print the branch name for verification
                     echo "Branch Name: ${env.BRANCH_NAME}"
                 }
                 // sh 'echo $BRANCH_NAME'
